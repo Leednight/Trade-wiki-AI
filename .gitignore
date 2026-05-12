@@ -1,0 +1,65 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment & secrets
+.env
+.env.local
+workspace/.ssh/
+
+# Data directories (large files, never commit)
+data/chromadb/
+data/db/
+data/raw/books/*.pdf
+data/raw/videos/*.mp4
+data/raw/videos/*.mkv
+data/refined/*.json
+data/eval/*.json
+data/transcripts/*.txt
+data/lora/
+
+# Keep directory structure with .gitkeep
+!data/**/.gitkeep
+
+# Model files
+*.gguf
+*.bin
+*.safetensors
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Test & coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Encryption key
+.encryption_key
