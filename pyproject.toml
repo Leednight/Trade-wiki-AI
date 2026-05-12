@@ -23,6 +23,7 @@ dependencies = [
     "openai-whisper>=20231117",
     "sentence-transformers>=3.0",
     "akshare>=1.14",
+    "yfinance>=0.2.37",
     "structlog>=24.1",
     "httpx>=0.27",
     "python-dotenv>=1.0",

@@ -10,16 +10,22 @@ logger = structlog.get_logger(__name__)
 
 # 脱敏正则模式
 SANITIZE_PATTERNS = [
-    # 品种名
+    # 加密货币品种名
+    (r"(BTC|ETH|BNB|SOL|XRP|DOGE|ADA|AVAX|比特币|以太坊|大饼|二饼)", "CRYPTO"),
+    # 期货品种名
     (r"(螺纹钢|铁矿|焦煤|焦炭|沪铜|沪金|沪银|原油|棕榈油|豆粕|菜油|PTA|甲醇|纯碱|玻璃)", "COMMODITY"),
-    # 数量+单位
+    # 美股代码
+    (r"\b(AAPL|NVDA|TSLA|MSFT|GOOGL|AMZN|META|SPY|QQQ|DIA)\b", "STOCK"),
+    # 数量+单位 (期货)
     (r"(\d+)\s*(手|吨)", "QUANTITY"),
-    # 价格 (4-5位数字)
-    (r"(?<!\d)(\d{4,5})(?!\d)", "PRICE"),
+    # 数量+单位 (加密货币)
+    (r"(\d+\.?\d*)\s*(个|枚|币|USDT|u)", "CRYPTO_QUANTITY"),
+    # 价格 (4-6位数字含小数，适配加密货币大价格)
+    (r"(?<!\d)(\d{3,6}\.?\d*)(?!\d)", "PRICE"),
     # 止损价格
-    (r"止损\s*(\d{3,5})", "STOP_LOSS"),
+    (r"止损\s*(\d{3,6}\.?\d*)", "STOP_LOSS"),
     # 止盈价格
-    (r"止盈\s*(\d{3,5})", "TAKE_PROFIT"),
+    (r"止盈\s*(\d{3,6}\.?\d*)", "TAKE_PROFIT"),
     # 日期
     (r"(昨天|前天|上周|上周一|上周二|上周三|上周四|上周五|今天|本周)", "DATE"),
 ]

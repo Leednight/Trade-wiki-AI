@@ -35,21 +35,31 @@ class OllamaSettings(BaseSettings):
     timeout: int = 60  # 秒
 
 
-class DeepSeekSettings(BaseSettings):
-    """DeepSeek API 配置"""
+class SiliconFlowSettings(BaseSettings):
+    """硅基流动 API 配置 (主力云端模型)
 
-    model_config = SettingsConfigDict(env_prefix="DEEPSEEK_")
+    官网: https://siliconflow.cn
+    OpenAI 兼容格式，支持多种开源模型:
+    - deepseek-ai/DeepSeek-V3         通用推理，性价比高
+    - deepseek-ai/DeepSeek-R1         深度推理，带思维链
+    - Qwen/Qwen2.5-72B-Instruct       中文理解强
+    - Qwen/Qwen2.5-7B-Instruct        轻量快速
+    - Pro/Qwen/Qwen2.5-VL-7B-Instruct 视觉理解
+    """
+
+    model_config = SettingsConfigDict(env_prefix="SILICONFLOW_")
 
     api_key: str = ""
-    base_url: str = "https://api.deepseek.com/v1"
-    model: str = "deepseek-chat"
+    base_url: str = "https://api.siliconflow.cn/v1"
+    model: str = "deepseek-ai/DeepSeek-V3"
+    vl_model: str = "Pro/Qwen/Qwen2.5-VL-7B-Instruct"  # 视觉理解模型
     temperature: float = 0.7
     max_tokens: int = 4096
     timeout: int = 120
 
 
 class OpenAISettings(BaseSettings):
-    """OpenAI API 配置 (备用)"""
+    """OpenAI API 配置 (备用，可选)"""
 
     model_config = SettingsConfigDict(env_prefix="OPENAI_")
 
@@ -69,6 +79,17 @@ class EmbeddingSettings(BaseSettings):
     model: str = "BAAI/bge-m3"
     device: str = "cuda"
     normalize_embeddings: bool = True
+    provider: str = "local"  # local (本地GPU) / siliconflow (远程API)
+
+
+class BinanceSettings(BaseSettings):
+    """币安 API 配置 (数字货币行情)"""
+
+    model_config = SettingsConfigDict(env_prefix="BINANCE_")
+
+    base_url: str = "https://api.binance.com"
+    api_key: str = ""  # 公开行情无需API Key
+    api_secret: str = ""  # 需要私有数据时填写
 
 
 class DatabaseSettings(BaseSettings):
@@ -110,9 +131,10 @@ class Settings(BaseSettings):
     app: AppSettings = AppSettings()
     feishu: FeishuSettings = FeishuSettings()
     ollama: OllamaSettings = OllamaSettings()
-    deepseek: DeepSeekSettings = DeepSeekSettings()
+    siliconflow: SiliconFlowSettings = SiliconFlowSettings()
     openai: OpenAISettings = OpenAISettings()
     embedding: EmbeddingSettings = EmbeddingSettings()
+    binance: BinanceSettings = BinanceSettings()
     database: DatabaseSettings = DatabaseSettings()
 
 

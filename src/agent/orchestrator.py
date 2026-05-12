@@ -133,13 +133,15 @@ class AgentOrchestrator:
             is_local=False,
         )
 
-        # 选择供应商
+        # 选择供应商和模型
         provider = self.provider_router.choose_provider({"has_image": False})
+        model = self.provider_router.choose_model({"has_image": False})
 
         content = await self.cloud_model.chat(
             messages=messages,
             system=system_prompt,
             provider=provider,
+            model=model,
         )
 
         # 还原脱敏
@@ -164,10 +166,12 @@ class AgentOrchestrator:
 
         # 云端推理
         provider = self.provider_router.choose_provider({"has_image": False})
+        model = self.provider_router.choose_model({"has_image": False})
         content = await self.cloud_model.chat(
             messages=messages,
             system=system_prompt,
             provider=provider,
+            model=model,
         )
 
         # 还原脱敏
